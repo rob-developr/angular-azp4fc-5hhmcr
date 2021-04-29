@@ -118,7 +118,7 @@ Select a title to set on the current HTML document:
   <mat-step [stepControl]="contactFormGroup">
     <form [formGroup]="contactFormGroup">
       <ng-template matStepLabel>Contact<br>Details</ng-template>
-      <div class="mat-form-field-20">
+      <div class="mat-form-field-20" *ngFor="let contact of contactInfoFormGroups; let i = index">
         <mat-form-field>
         <mat-label>First Name</mat-label>
         <input matInput>
@@ -148,6 +148,9 @@ Select a title to set on the current HTML document:
     </mat-option>
   </mat-autocomplete>
   </mat-form-field>
+      </div>
+      <div>
+      <button mat-raised-button #addContact class="addButton" (click)="onAddContact()">Add Contact</button>
       </div>
       <div>
         <button mat-raised-button color="secondary" matStepperPrevious>

@@ -97,7 +97,8 @@ task: Task = {
       secondCtrl: ['', Validators.required]
     });
     this.contactFormGroup = this._formBuilder.group({
-      contactCtrl: ['', Validators.required]
+      contactCtrl: ['', Validators.required],
+      contacts: new FormArray([]),
     });
     this.testInfoFormGroup = this._formBuilder.group({
       thirdCtrl: ['', Validators.required],
@@ -150,8 +151,21 @@ task: Task = {
   get f() { return this.stabilityInfoFormGroup.controls; }
   get t() { return this.f.conditions as FormArray; }
   get stabilityInfoFormGroups() { return this.t.controls as FormGroup[]; }
+  
+  get g() { return this.stabilityInfoFormGroup.controls; }
+  get s() { return this.f.conditions as FormArray; }
+  get contactInfoFormGroups() { return this.s.controls as FormGroup[]; }
 
     onAddCondition() {
+        this.t.push(this._formBuilder.group({
+        numberOfConditions: ['', Validators.required],
+        stabilityCondition: ['', Validators.required],
+        stabilityValue: ['', Validators.required],
+        stabilityPeriod: ['', Validators.required],
+        }));
+    }
+
+        onAddContact() {
         this.t.push(this._formBuilder.group({
         numberOfConditions: ['', Validators.required],
         stabilityCondition: ['', Validators.required],
