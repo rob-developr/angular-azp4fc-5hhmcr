@@ -118,38 +118,41 @@ Select a title to set on the current HTML document:
   <mat-step [stepControl]="contactFormGroup">
     <form [formGroup]="contactFormGroup">
       <ng-template matStepLabel>Contact<br>Details</ng-template>
-      <div class="example-full-width">
-        <table class="example-full-width" cellspacing="0"><tr>
+      <div class=".example-chip-list">
+        <table><tr>
         <td>
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
         <mat-label>First Name</mat-label>
         <input matInput>
         </mat-form-field></td>
-    <td><mat-form-field class="example-full-width">
+    <td><mat-form-field>
       <mat-label>Last Name</mat-label>
       <input matInput>
     </mat-form-field></td>
 
-    <td><mat-form-field appearance="fill">
+    <td><mat-form-field>
             <mat-label>Enter contact email</mat-label>
             <input matInput placeholder="pat@example.com" [formControl]="email" required>
             <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       </td>
       <td>
-        <mat-form-field class="example-chip-list">
-          <mat-label>Role / Title</mat-label>
-              <mat-chip-list #chipList aria-label="Role selection">
-              <mat-chip *ngFor="let role of roles" [selectable]="selectable" [removable]="removable" (removed)="remove(role)">
-                {{role.name}}
-                <mat-icon matChipRemove *ngIf="removable">Cancel</mat-icon>
-          </mat-chip>
-    <input placeholder="New Role/Title ..."
-           [matChipInputFor]="chipList"
-           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-           [matChipInputAddOnBlur]="addOnBlur"
-           (matChipInputTokenEnd)="add($event)">
-  </mat-chip-list>
+    <mat-form-field>
+  <mat-label>Job Role / Title</mat-label>
+  <mat-chip-list #chipList aria-label="Role selection">
+    <mat-chip *ngFor="let role of roles" [selectable]="selectable" [removable]="removable" (removed)="remove(role)">
+      {{role}}
+      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+    </mat-chip>
+      <input placeholder="New Role / Title..." #roleInput [formControl]="rolectrl" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+      (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+    <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+      {{role}}
+    </mat-option>
+  </mat-autocomplete>
+
   </mat-form-field>
   </td>
       </tr>

@@ -1,8 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, FormArray, FormControl, Validators} from '@angular/forms';
 import {ThemePalette} from '@angular/material/core';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatAutocompleteSelectedEvent, MatAutocomplete} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 export interface Task {
   name: string;
@@ -39,6 +42,10 @@ export class requestForm implements OnInit {
   submitFormGroup: FormGroup;
 
   constructor(private _formBuilder: FormBuilder) {
+
+        this.filteredRoles = this.rolectrl.valueChanges.pipe(
+        startWith(null),
+        map((role: string | null) => role ? this._filter(role) : this.allRoles.slice()));
     /**
     this.stabilityInfoFormGroup = this._formBuilder.group({
       
@@ -67,6 +74,20 @@ task: Task = {
   allComplete: boolean = false;
   email = new FormControl('', [Validators.required, Validators.email]);
   tmp : boolean = false;
+
+  visible = true;
+  selectable = true;
+  removable = true;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  rolectrl = new FormControl();
+  filteredRoles: Observable<string[]>;
+  roles: string[] = [];
+  allRoles: string[] = ['Specimen Reception', 'Operations Manager', 'Laboratory Scientist', 'Technical Specialist', 'Account Manager'];
+
+  @ViewChild('roleInput') roleInput: ElementRef<HTMLInputElement>;
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+
+
 
   ngOnInit() {
     this.testNameFormGroup = this._formBuilder.group({
@@ -148,36 +169,41 @@ task: Task = {
       }
     }
 
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = true;
-  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-
-  roles: Role[] = [
-  ];
-
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
 
-    // Add Our Roles
+    // Add our Role
     if ((value || '').trim()) {
-      this.roles.push({name: value.trim()});
+      this.roles.push(value.trim());
     }
 
     // Reset the input value
     if (input) {
       input.value = '';
     }
+
+    this.rolectrl.setValue(null);
   }
 
-  remove(role: Role): void {
+  remove(role: string): void {
     const index = this.roles.indexOf(role);
 
     if (index >= 0) {
       this.roles.splice(index, 1);
     }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.roles.push(event.option.viewValue);
+    this.roleInput.nativeElement.value = '';
+    this.rolectrl.setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allRoles.filter(role => role.toLowerCase().indexOf(filterValue) === 0);
   }
 
 }
