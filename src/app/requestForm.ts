@@ -72,7 +72,9 @@ task: Task = {
   };
 
   allComplete: boolean = false;
+  public myreg = /(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)/gi
   email = new FormControl('', [Validators.required, Validators.email]);
+  url = new FormControl('', [Validators.required, Validators.pattern(this.myreg)]);
   tmp : boolean = false;
 
   visible = true;
@@ -86,8 +88,6 @@ task: Task = {
 
   @ViewChild('roleInput') roleInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
-
-
 
   ngOnInit() {
     this.testNameFormGroup = this._formBuilder.group({
@@ -120,10 +120,7 @@ task: Task = {
       seventhCtrl: ['', Validators.required]
     });
     this.attachmentsFormGroup = this._formBuilder.group({
-      eighthCtrl: ['', Validators.required]
-    });
-    this.reviewFormGroup = this._formBuilder.group({
-      ninthCtrl: ['', Validators.required]
+      eighthCtrl: ['', Validators.required],
     });
     this.submitFormGroup = this._formBuilder.group({
       tenthCtrl: ['', Validators.required]
@@ -204,6 +201,11 @@ task: Task = {
     const filterValue = value.toLowerCase();
 
     return this.allRoles.filter(role => role.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+   markTouched() {
+    this.url.markAsTouched();
+    this.url.updateValueAndValidity();
   }
 
 }

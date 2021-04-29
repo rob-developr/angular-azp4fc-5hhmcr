@@ -289,13 +289,20 @@ Select a title to set on the current HTML document:
   <!-- Tab9. Attachments -->
   <mat-step [stepControl]="attachmentsFormGroup">
     <form [formGroup]="attachmentsFormGroup">
-      <ng-template matStepLabel>Reference Material,<br>Notes & Attachments</ng-template
-      >
-
+      <ng-template matStepLabel>Reference Material,<br>Notes & Attachments</ng-template>
+          <mat-form-field  formControlName="urlAttach">
+          <mat-label>Attach A Link</mat-label>
+        <input (focus)="markTouched()" matInput placeholder="Enter Url" [formControl]="url" required>  
+        <mat-error *ngIf="url.hasError('required')">Url requried</mat-error>
+        <mat-error *ngIf="url.hasError('pattern')">Url Pattern Invalid</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width">
+        <mat-label>Any Additional Notes/Comments?</mat-label>
+        <textarea matInput placeholder="Additional Notes/Comments"></textarea>
+        </mat-form-field>
       <div>
-        <button mat-raised-button color="secondary" matStepperPrevious>
-          Back</button
-        >&nbsp;
+        <button mat-raised-button color="secondary" matStepperPrevious>Back</button>&nbsp;
         <button mat-raised-button color="primary" matStepperNext>Next</button>
       </div>
     </form>
@@ -305,22 +312,14 @@ Select a title to set on the current HTML document:
   <mat-step [stepControl]="submitFormGroup">
     <form [formGroup]="submitFormGroup">
       <ng-template matStepLabel>Save,<br>Review & Submit</ng-template>
-      <mat-slide-toggle isChecked="false" required [(ngModel)]="acceptTCs"
-        >Accept Terms of Service</mat-slide-toggle
-      >
-      <br />
-      <br />
+      <mat-slide-toggle isChecked="false" required [(ngModel)]="acceptTCs">Accept Terms of Service</mat-slide-toggle>
+      <br/>
+      <br/>
       <div>
         <button mat-raised-button color="secondary" matStepperPrevious>
           Back</button
         >&nbsp;
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          (click)="stepper.Submit()"
-          disabled
-        >
+        <button mat-raised-button color="primary" type="submit" (click)="stepper.Submit()" disabled>
           Submit
         </button>
       </div>
