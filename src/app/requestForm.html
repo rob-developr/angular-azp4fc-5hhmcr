@@ -118,26 +118,21 @@ Select a title to set on the current HTML document:
   <mat-step [stepControl]="contactFormGroup">
     <form [formGroup]="contactFormGroup">
       <ng-template matStepLabel>Contact<br>Details</ng-template>
-      <div class=".example-chip-list">
-        <table><tr>
-        <td>
+      <div class="mat-form-field-20">
         <mat-form-field>
         <mat-label>First Name</mat-label>
         <input matInput>
-        </mat-form-field></td>
-    <td><mat-form-field>
+        </mat-form-field>
+    <mat-form-field>
       <mat-label>Last Name</mat-label>
       <input matInput>
-    </mat-form-field></td>
-
-    <td><mat-form-field>
+    </mat-form-field>
+    <mat-form-field>
             <mat-label>Enter contact email</mat-label>
             <input matInput placeholder="pat@example.com" [formControl]="email" required>
             <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
-      </td>
-      <td>
-    <mat-form-field>
+    <mat-form-field class="example-chip-list">
   <mat-label>Job Role / Title</mat-label>
   <mat-chip-list #chipList aria-label="Role selection">
     <mat-chip *ngFor="let role of roles" [selectable]="selectable" [removable]="removable" (removed)="remove(role)">
@@ -152,11 +147,7 @@ Select a title to set on the current HTML document:
       {{role}}
     </mat-option>
   </mat-autocomplete>
-
   </mat-form-field>
-  </td>
-      </tr>
-      </table>
       </div>
       <div>
         <button mat-raised-button color="secondary" matStepperPrevious>
