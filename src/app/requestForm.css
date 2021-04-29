@@ -1,0 +1,76 @@
+.mat-stepper-vertical {
+  margin-top: 180px;
+}
+
+.mat-form-field {
+    border: none;
+}
+
+.mat-form-field-20 .mat-form-field + .mat-form-field {
+  margin-left: 12px;
+}
+.mat-form-field-20 .mat-form-field {
+  width: 300px;
+}
+
+.mat-form-field-20 form {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.mat-form-field-20 form > * {
+  margin: 0px 0;
+}
+
+.addCondition{
+    margin-left:0px;
+    margin-bottom:30px
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 80%;
+}
+
+.stability-container .mat-form-field + .mat-form-field{
+margin-left: 8px;
+}
+
+.stability-container .mat-form-field {
+  width: 300px;
+}
+
+.mat-select-placeholder.mat-floating-placeholder {transform: scale(.75) translateY(7px) !important;}
+
+.example-full-width {
+  width: 80%;
+}
+
+.example-full-width-value {
+  height:90px;
+  width: 80%;
+}
+
+.example-chip-list {
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.example-section {
+  margin: 12px 0;
+}
+
+.example-margin {
+  margin: 0 12px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+}
+
+.mat-select-trigger { height: 48px; }
